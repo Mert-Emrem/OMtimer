@@ -28,18 +28,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/3.0.1/luxon.min.js"></script>
 </head>
 <body>
-    <div id="timer">00:00:00</div>
+    <div id="timer">00d 00h 00m 00s</div>
     <div id="timezone">CCT (Camilla Colombo Time: GMT+1:45)</div>
     <script>
         const startDate = luxon.DateTime.fromISO('2025-01-27T14:00:00Z'); // GMT
 
         function updateTimer() {
-            const now = luxon.DateTime.now().setZone('Etc/GMT+1:45');
+            const now = luxon.DateTime.now().setZone('UTC+1:45');
             const diff = now.diff(startDate, ['days', 'hours', 'minutes', 'seconds']);
-            const days = String(Math.floor(diff.as('days'))).padStart(2, '0');
+            const days = String(diff.days).padStart(2, '0');
             const hours = String(diff.hours).padStart(2, '0');
             const minutes = String(diff.minutes).padStart(2, '0');
-            const seconds = String(diff.seconds.toFixed(0)).padStart(2, '0');
+            const seconds = String(Math.floor(diff.seconds)).padStart(2, '0');
             document.getElementById('timer').textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
         }
 
