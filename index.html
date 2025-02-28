@@ -7,6 +7,7 @@
     <style>
         body {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
@@ -18,21 +19,28 @@
             font-size: 3em;
             color: #333;
         }
+        #timezone {
+            font-size: 1.5em;
+            color: #666;
+            margin-top: 10px;
+        }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/3.0.1/luxon.min.js"></script>
 </head>
 <body>
     <div id="timer">00:00:00</div>
+    <div id="timezone">CCT (Camilla Colombo Time: GMT+1:45)</div>
     <script>
         const startDate = luxon.DateTime.fromISO('2025-01-27T14:00:00Z'); // GMT
 
         function updateTimer() {
-            const now = luxon.DateTime.now().setZone('UTC+2:45');
-            const diff = now.diff(startDate, ['hours', 'minutes', 'seconds']);
-            const hours = String(Math.floor(diff.as('hours'))).padStart(2, '0');
+            const now = luxon.DateTime.now().setZone('Etc/GMT+1:45');
+            const diff = now.diff(startDate, ['days', 'hours', 'minutes', 'seconds']);
+            const days = String(Math.floor(diff.as('days'))).padStart(2, '0');
+            const hours = String(diff.hours).padStart(2, '0');
             const minutes = String(diff.minutes).padStart(2, '0');
             const seconds = String(diff.seconds.toFixed(0)).padStart(2, '0');
-            document.getElementById('timer').textContent = `${hours}:${minutes}:${seconds}`;
+            document.getElementById('timer').textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
         }
 
         setInterval(updateTimer, 1000);
