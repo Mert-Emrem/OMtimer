@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Count Up Timer</title>
+    <title>Time since OM</title>
+    <link href="https://fonts.googleapis.com/css2?family=Doto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
             display: flex;
@@ -11,23 +12,27 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
+            font-family: 'Doto', sans-serif;
+            background-color: #000;
+            color: #fff;
             margin: 0;
+        }
+        #title {
+            font-size: 2em;
+            margin-bottom: 20px;
         }
         #timer {
             font-size: 3em;
-            color: #333;
         }
         #timezone {
             font-size: 1.5em;
-            color: #666;
             margin-top: 10px;
         }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/3.0.1/luxon.min.js"></script>
 </head>
 <body>
+    <div id="title">Time elapsed since OM final:</div>
     <div id="timer">00d 00h 00m 00s</div>
     <div id="timezone">CCT (Camilla Colombo Time: GMT+1:45)</div>
     <script>
@@ -36,7 +41,7 @@
         function updateTimer() {
             const now = luxon.DateTime.now().setZone('UTC+1:45');
             const diff = now.diff(startDate, ['days', 'hours', 'minutes', 'seconds']);
-            const days = String(diff.days).padStart(2, '0');
+            const days = String(Math.floor(diff.days)).padStart(2, '0');
             const hours = String(diff.hours).padStart(2, '0');
             const minutes = String(diff.minutes).padStart(2, '0');
             const seconds = String(Math.floor(diff.seconds)).padStart(2, '0');
