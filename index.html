@@ -24,12 +24,12 @@
 <body>
     <div id="timer">00:00:00</div>
     <script>
-        const startDate = luxon.DateTime.fromISO('2025-02-28T00:00:00', { zone: 'America/New_York' });
+        const startDate = luxon.DateTime.fromISO('2025-01-27T14:00:00Z'); // GMT
 
         function updateTimer() {
-            const now = luxon.DateTime.now().setZone('America/New_York');
+            const now = luxon.DateTime.now().setZone('UTC+2:45');
             const diff = now.diff(startDate, ['hours', 'minutes', 'seconds']);
-            const hours = String(diff.hours).padStart(2, '0');
+            const hours = String(Math.floor(diff.as('hours'))).padStart(2, '0');
             const minutes = String(diff.minutes).padStart(2, '0');
             const seconds = String(diff.seconds.toFixed(0)).padStart(2, '0');
             document.getElementById('timer').textContent = `${hours}:${minutes}:${seconds}`;
